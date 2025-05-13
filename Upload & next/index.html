@@ -1,0 +1,426 @@
+<!-- Firebase CDN SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+
+<!-- Upload & Auth UI -->
+<div style="max-width:400px;margin:auto;font-family:sans-serif">
+  <h3>Login to Upload Image</h3>
+  <input type="email" id="email" placeholder="Email" /><br><br>
+  <input type="password" id="password" placeholder="Password" /><br><br>
+  <button onclick="loginUser()">Login</button>
+  <button onclick="signupUser()">Signup</button><br><br>
+  
+  <h3>Upload Your Image</h3>
+  <input type="file" id="imageFile" accept="image/*" /><br><br>
+  <button onclick="uploadImage()">Upload</button>
+  
+  <p id="uploadStatus"></p>
+  <img id="previewImg" style="max-width:100%; margin-top:10px;" />
+</div>
+
+<script>
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBnOZ8YeEi27mckQDBl6OIqrZcDgYqEKN4",
+  authDomain: "nwaezehaircutz.firebaseapp.com",
+  projectId: "nwaezehaircutz",
+  storageBucket: "nwaezehaircutz.firebasestorage.app",
+  messagingSenderId: "781080215132",
+  appId: "1:781080215132:web:728b77b3247b7d2a9df099",
+  measurementId: "G-H0QSSNVDW4"
+};
+
+
+
+  // Your Firebase config
+  const firebaseConfig = {
+    apiKey: "AIzaSyBnOZ8YeEi27mckQDBl6OIqrZcDgYqEKN4",
+    authDomain: "nwaezehaircutz",
+    projectId: "nwaezehaircutz",
+    storageBucket: "nwaezehaircutz.appspot.com",
+    messagingSenderId: "781080215132",
+    appId: "1:781080215132:web:728b77b3247b7d2a9df099"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const storage = firebase.storage();
+  
+  function loginUser() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    auth.signInWithEmailAndPassword(email, pass)
+      .then(() => alert("Logged in"))
+      .catch((e) => alert(e.message));
+  }
+  
+  function signupUser() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    auth.createUserWithEmailAndPassword(email, pass)
+      .then(() => alert("Account created"))
+      .catch((e) => alert(e.message));
+  }
+  
+  function uploadImage() {
+    const file = document.getElementById("imageFile").files[0];
+    const user = auth.currentUser;
+    if (!user) {
+      alert("Please log in first.");
+      return;
+    }
+    const filePath = `users/${user.uid}/${file.name}`;
+    const ref = storage.ref(filePath);
+    ref.put(file).then(snapshot => {
+      return snapshot.ref.getDownloadURL();
+    }).then(url => {
+      document.getElementById("uploadStatus").innerText = "Upload successful!";
+      document.getElementById("previewImg").src = url;
+    }).catch(err => alert(err.message));
+  }
+</script>
+
+
+
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+
+<div style="max-width:400px;margin:auto;">
+  <h3>Upload Image</h3>
+  <input type="file" id="imageInput" accept="image/*" /><br><br>
+  <button onclick="uploadPublic()">Upload</button>
+  <p id="statusText"></p>
+  <img id="imgPreview" style="max-width:100%;" />
+</div>
+
+<script>
+const firebaseConfig = {
+    apiKey: "AIzaSyBnOZ8YeEi27mckQDBl6OIqrZcDgYqEKN4",
+    authDomain: "nwaezehaircutz",
+    projectId: "nwaezehaircutz",
+    storageBucket: "nwaezehaircutz.appspot.com",
+    messagingSenderId: "781080215132",
+    appId: "1:781080215132:web:728b77b3247b7d2a9df099"
+  };
+  
+const firebaseConfig = {
+    apiKey: "AIzaSyBnOZ8YeEi27mckQDBl6OIqrZcDgYqEKN4",
+    authDomain: "nwaezehaircutz",
+    projectId: "nwaezehaircutz",
+    storageBucket: "nwaezehaircutz.appspot.com",
+    messagingSenderId: "781080215132",
+    appId: "1:781080215132:web:728b77b3247b7d2a9df099"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const storage = firebase.storage();
+  
+  function uploadPublic() {
+    const file = document.getElementById('imageInput').files[0];
+    const ref = storage.ref('public_uploads/' + file.name);
+    ref.put(file).then(snapshot => snapshot.ref.getDownloadURL())
+      .then(url => {
+        document.getElementById("statusText").innerText = "Upload complete!";
+        document.getElementById("imgPreview").src = url;
+      })
+      .catch(err => alert(err.message));
+  }
+</script>
+
+
+
+
+<script>
+const referralCode = user.uid.substring(0, 8);
+const referralLink = `https://yourdomain.com?ref=${referralCode}`;
+</script>
+
+
+<!-- Firebase SDKs -->
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-storage-compat.js"></script>
+
+<style>
+  .tab { display: none; }
+  .tab.active { display: block; }
+  .nav-btn { margin: 5px; padding: 5px 10px; cursor: pointer; background: #111; color: white; }
+</style>
+
+<!-- Navigation Buttons -->
+<div style="text-align:center;">
+  <button class="nav-btn" onclick="switchTab('loginTab')">Login</button>
+  <button class="nav-btn" onclick="switchTab('uploadTab')">Upload</button>
+  <button class="nav-btn" onclick="switchTab('adminTab')">Admin</button>
+</div>
+
+<!-- Login Tab -->
+<div id="loginTab" class="tab active">
+  <h3>Login or Signup</h3>
+  <input type="email" id="email" placeholder="Email" /><br><br>
+  <input type="password" id="password" placeholder="Password" /><br><br>
+  <button onclick="loginUser()">Login</button>
+  <button onclick="signupUser()">Signup</button>
+</div>
+
+<!-- Upload Tab -->
+<div id="uploadTab" class="tab">
+  <h3>Upload Image</h3>
+  <input type="file" id="uploadFile" /><br><br>
+  <button onclick="uploadImage()">Upload</button>
+  <p id="uploadMsg"></p>
+  <img id="previewImage" style="max-width:100%; margin-top:10px;" />
+</div>
+
+<!-- Admin Tab -->
+<div id="adminTab" class="tab">
+  <h3>Admin View: All Uploaded Images</h3>
+  <div id="adminGallery"></div>
+</div>
+
+<script>
+const firebaseConfig = {
+    apiKey: "AIzaSyBnOZ8YeEi27mckQDBl6OIqrZcDgYqEKN4",
+    authDomain: "nwaezehaircutz",
+    projectId: "nwaezehaircutz",
+    storageBucket: "nwaezehaircutz.appspot.com",
+    messagingSenderId: "781080215132",
+    appId: "1:781080215132:web:728b77b3247b7d2a9df099"
+  };
+  
+  // Firebase config (replace with yours)
+  const firebaseConfig = {
+    apiKey: "AIzaSyBnOZ8YeEi27mckQDBl6OIqrZcDgYqEKN4",
+    authDomain: "nwaezehaircutz",
+    projectId: "nwaezehaircutz",
+    storageBucket: "nwaezehaircutz.appspot.com",
+    messagingSenderId: "781080215132",
+    appId: "1:781080215132:web:728b77b3247b7d2a9df099"
+  };
+  
+  firebase.initializeApp(firebaseConfig);
+  const auth = firebase.auth();
+  const storage = firebase.storage();
+
+  // Tab Switcher
+  function switchTab(tabId) {
+    document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+    document.getElementById(tabId).classList.add('active');
+  }
+
+  // Login / Signup
+  function loginUser() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    auth.signInWithEmailAndPassword(email, pass)
+      .then(() => {
+        alert("Logged in!");
+        switchTab("uploadTab"); // redirect after login
+      }).catch(err => alert(err.message));
+  }
+
+  function signupUser() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    auth.createUserWithEmailAndPassword(email, pass)
+      .then(() => {
+        alert("Account created!");
+        switchTab("uploadTab"); // redirect after signup
+      }).catch(err => alert(err.message));
+  }
+
+  // Upload Image
+  function uploadImage() {
+    const file = document.getElementById("uploadFile").files[0];
+    const user = auth.currentUser;
+    if (!user) return alert("Login first.");
+
+    const path = `uploads/${user.uid}/${file.name}`;
+    const ref = storage.ref(path);
+    ref.put(file).then(snapshot => snapshot.ref.getDownloadURL())
+      .then(url => {
+        document.getElementById("uploadMsg").innerText = "Upload complete!";
+        document.getElementById("previewImage").src = url;
+      })
+      .catch(err => alert(err.message));
+  }
+
+  // Admin View (list all uploads)
+  function listAllImages() {
+    const ref = storage.ref("uploads/");
+    ref.listAll().then(result => {
+      let gallery = "";
+      result.prefixes.forEach(folderRef => {
+        folderRef.listAll().then(files => {
+          files.items.forEach(fileRef => {
+            fileRef.getDownloadURL().then(url => {
+              gallery += `<div style="margin:10px;">
+                  <img src="${url}" style="max-width:100px;"><br>
+                  <small>${fileRef.fullPath}</small><br>
+                  <a href="${url}" target="_blank">View</a>
+                </div>`;
+              document.getElementById("adminGallery").innerHTML = gallery;
+            });
+          });
+        });
+      });
+    });
+  }
+
+  // Auto-load admin tab
+  document.getElementById("adminTab").addEventListener("click", listAllImages);
+</script>
+
+
+
+<script>
+  function loginUser() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    firebase.auth().signInWithEmailAndPassword(email, pass)
+      .then(userCredential => {
+        const user = userCredential.user;
+        window.location.href = `nextpage.html?uid=${user.uid}`;
+      }).catch(err => alert(err.message));
+  }
+
+  function signupUser() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    firebase.auth().createUserWithEmailAndPassword(email, pass)
+      .then(userCredential => {
+        const user = userCredential.user;
+        window.location.href = `nextpage.html?uid=${user.uid}`;
+      }).catch(err => alert(err.message));
+  }
+</script>
+
+
+<button onclick="goToNextPage()">Next Page</button>
+
+
+
+<script>
+function goToNextPage() {
+  window.location.href = 'nextpage.html'; // change to your next page URL
+}
+</script>
+
+
+
+
+
+
+<body>
+  <h2>Welcome to Barber Go!</h2>
+  <p>Your referral link:</p>
+  <input id="refLink" style="width:100%" readonly />
+  <br><br>
+  <button onclick="shareWhatsApp()">Share via WhatsApp</button>
+</body>
+
+<script>
+  const urlParams = new URLSearchParams(window.location.search);
+  const uid = urlParams.get('uid');
+
+  const referralLink = `https://yourblogsite.blogspot.com?ref=${uid}`;
+  document.getElementById("refLink").value = referralLink;
+
+  function shareWhatsApp() {
+    const msg = `Join Barber Go via my referral: ${referralLink}`;
+    const shareURL = `https://wa.me/?text=${encodeURIComponent(msg)}`;
+    window.open(shareURL, '_blank');
+  }
+</script>
+
+
+
+
+
+
+<script>
+  const ref = new URLSearchParams(window.location.search).get('ref');
+  if (ref) {
+    localStorage.setItem('referrer_uid', ref); // Store referrer locally
+  }
+</script>
+
+
+
+
+<script>
+
+save in
+
+firebase.auth().onAuthStateChanged((user) => {
+  if (user) {
+    const referrer = localStorage.getItem('referrer_uid');
+    if (referrer) {
+      firebase.firestore().collection("referrals").add({
+        referredBy: referrer,
+        newUser: user.uid,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      localStorage.removeItem('referrer_uid');
+    }
+  }
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+<style>
+.next-button {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #007BFF;
+  color: white;
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: bold;
+}
+.next-button:hover {
+  background-color: #0056b3;
+}
+</style>
+
+
+
+
+
+
+
+
+<script>
+  function loginUser() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    firebase.auth().signInWithEmailAndPassword(email, pass)
+      .then(userCredential => {
+        const user = userCredential.user;
+        window.location.href = `nextpage.html?uid=${user.uid}`;
+      }).catch(err => alert(err.message));
+  }
+
+  function signupUser() {
+    const email = document.getElementById("email").value;
+    const pass = document.getElementById("password").value;
+    firebase.auth().createUserWithEmailAndPassword(email, pass)
+      .then(userCredential => {
+        const user = userCredential.user;
+        window.location.href = `nextpage.html?uid=${user.uid}`;
+      }).catch(err => alert(err.message));
+  }
+</script>
